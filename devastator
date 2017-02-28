@@ -1,0 +1,17 @@
+#! /bin/sh
+if [ $# == 0 ]
+	then
+    	echo "Missing device argument, aborting"
+    	exit
+fi
+
+if [ -c $1 ]
+	then
+		size=`diskinfo $1 | awk '{print $3}'`
+		openssl enc -bf -pass pass:"$(dd if=/dev/urandom bs=128 count=1 2>/dev/null | b64encode -r -)" -nosalt </dev/zero | pv -bartpes $size | dd bs=64k of=$1 >/dev/null 2>&1
+		echo "^ Thanks openssl for not implementing SIGPIPE correctly"
+	else
+		echo "Not a valid device"
+		exit
+fi
+
