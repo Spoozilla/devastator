@@ -1,6 +1,6 @@
 # devastator
 
-./devastator <device>
+./devastator <i>device node</i>
 
 A quick and dirty "secure" drive scrubber for FreeBSD but with minor tweaks
 should be usable anywhere sensible.
@@ -16,6 +16,5 @@ zero.
 Note: It will be apparent to anyone inspecting the surface of the disk that
 it has been encrypted, possibly scrubbed. 
 
-todo:	Optional multiple passes 
-	Optional final zero pass
-
+todo:	Optional multiple passes.<br>
+todo:	Optional final zero pass.<br>
