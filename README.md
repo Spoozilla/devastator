@@ -1,6 +1,10 @@
 # devastator
 
+<<<<<<< HEAD
 ./devastator [optional flags] -d <device>
+=======
+./devastator <i>device node</i>
+>>>>>>> a3b8151d348817e1a5709e53816ccfe77713da99
 
 Flags:
 -0 Perform an additional final zero pass
@@ -22,6 +26,14 @@ One pass will render any information on the device unretrievable by any mortal
 methods, subsequent passes ensure the probability of useful recovery approach
 zero.
 
+<<<<<<< HEAD
 It will be apparent to anyone inspecting the surface of the disk that it has 
 been encrypted, possibly scrubbed although I think the final zero pass may 
 mitigate this.
+=======
+Note: It will be apparent to anyone inspecting the surface of the disk that
+it has been encrypted, possibly scrubbed. 
+
+todo:	Optional multiple passes.<br>
+todo:	Optional final zero pass.<br>
+>>>>>>> a3b8151d348817e1a5709e53816ccfe77713da99
