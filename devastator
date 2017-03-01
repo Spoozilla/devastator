@@ -40,7 +40,8 @@ while getopts ":0hc:d:" opt; do
                         zeroing=true
                 ;;
 
-		h)	echo "devastator"
+		h)	
+			echo "devastator"
 			echo "A quick and dirty 'secure' device scrubber"
 			echo "Usage: $0 [optional flags] -d <device node>"
 			echo "Flags:"
@@ -69,6 +70,7 @@ while [ $count -lt $iter ]
 	count=`expr $count + 1`
 	echo "Pass $count of $iter"
 	openssl enc -bf -pass pass:"$(dd if=/dev/urandom bs=128 count=1 2>/dev/null | b64encode -r -)" -nosalt </dev/zero | pv -bartpes $size | dd bs=64k of=$device >/dev/null 2>&1
+	echo "^ thanks OpenSSL for not implementing SIGPIPE correctly"
 done
 
 if [ "$zeroing" = true ]
