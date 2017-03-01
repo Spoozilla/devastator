@@ -1,17 +1,78 @@
 #! /bin/sh
-if [ $# == 0 ]
+
+iter=1
+zeroing=false
+
+while getopts ":0hc:d:" opt; do
+	case ${opt} in
+
+		c)	
+			temp=${OPTARG}
+			case $temp in
+				''|*[!0-9]*) 
+						echo "Invalid Count"
+						exit 1
+				;;
+
+				0)
+						echo "Zero times? Really?"
+                                                exit 1
+				;;
+
+				*)		
+						iter=$temp	
+				;;
+			esac
+		;;
+
+		d)	
+			if [ -c $OPTARG ] 
+				then 
+					device=$OPTARG
+					size=`diskinfo $device | awk '{print $3}'`
+				else
+					echo "Not a valid device"
+					exit 1
+			fi
+		;;
+
+                0)
+                        zeroing=true
+                ;;
+
+		h)	echo "devastator"
+			echo "A quick and dirty 'secure' device scrubber"
+			echo "Usage: $0 [optional flags] -d <device node>"
+			echo "Flags:"
+			echo "-0 enable aditional zeroing pass"
+			echo "-c <count> for multiple iterations"
+			echo "-h what you're reading"
+			exit
+			;;
+		*) 
+			echo "Invalid option" 
+			exit 1
+			;;
+	esac
+done
+
+if [ -z $device ] 
 	then
-    	echo "Missing device argument, aborting"
-    	exit
+	echo "Missing device node"
+	exit 1
 fi
 
-if [ -c $1 ]
-	then
-		size=`diskinfo $1 | awk '{print $3}'`
-		openssl enc -bf -pass pass:"$(dd if=/dev/urandom bs=128 count=1 2>/dev/null | b64encode -r -)" -nosalt </dev/zero | pv -bartpes $size | dd bs=64k of=$1 >/dev/null 2>&1
-		echo "^ Thanks openssl for not implementing SIGPIPE correctly"
-	else
-		echo "Not a valid device"
-		exit
-fi
+count=0
 
+while [ $count -lt $iter ]
+	do
+	count=`expr $count + 1`
+	echo "Pass $count of $iter"
+	openssl enc -bf -pass pass:"$(dd if=/dev/urandom bs=128 count=1 2>/dev/null | b64encode -r -)" -nosalt </dev/zero | pv -bartpes $size | dd bs=64k of=$device >/dev/null 2>&1
+done
+
+if [ "$zeroing" = true ]
+	then
+	echo "Zero Pass"
+	dd if=/dev/zero bs=1024k | pv -bartpes $size | dd bs=1024k of=$device >/dev/null 2>&1 
+fi
