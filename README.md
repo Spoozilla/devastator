@@ -1,10 +1,10 @@
 # devastator
 
-./devastator [optional flags] -d device
+./devastator [optional flags] -d <&lt>device<&gt>
 
 Flags:<br>
 -0 Perform an additional final zero pass<br>
--c <count> Performing multiple passes<br>
+-c <&lt>count<&gt> Performing multiple passes<br>
 -h Return something approximating help<br>
 
 A <i>quick</i> and <i>dirty secure</i> drive scrubber for FreeBSD but with 
