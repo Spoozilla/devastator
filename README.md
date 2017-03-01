@@ -1,18 +1,18 @@
 # devastator
 
-./devastator [optional flags] -d <lt>device<gt>
+./devastator [optional flags] -d device
 
-Flags:
--0 Perform an additional final zero pass
--c <count> Performing multiple passes 
--h Return something approximating help
+Flags:<br>
+-0 Perform an additional final zero pass<br>
+-c <count> Performing multiple passes<br>
+-h Return something approximating help<br>
 
 A <i>quick</i> and <i>dirty secure</i> drive scrubber for FreeBSD but with 
 minor tweaks should be usable anywhere sensible.
 
-Quick, because it's faster than /dev/random
-Secure, because it's less likely to be defeated than /dev/zero
-Dirty, because it's a bit slapdash
+Quick, because it's faster than /dev/random<br>
+Secure, because it's less likely to be defeated than /dev/zero<br>
+Dirty, because it's a bit slapdash<br>
 
 It scrawls over your entire disk with a blowfish generated pile of 
 pseudorandomness. A one time key is generated from urandom and a stream of
